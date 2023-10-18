@@ -38,6 +38,7 @@ import {
   LinkToUserWithPrefix,
   LinkToGroupWithPrefix,
 } from "../../util/linking";
+import { alignTime } from "../../util/data/alignTime";
 
 const PostTitle = () => {
   const record = useRecordContext();
@@ -62,7 +63,12 @@ export const GroupPage = () => {
 
   const datefilter =
     fromDate && toDate
-      ? { ts: [fromDate.toISOString(), toDate.toISOString()] }
+      ? {
+          ts: [
+            alignTime(fromDate).toISOString(),
+            alignTime(toDate).toISOString(),
+          ],
+        }
       : {};
 
   const PostBulkActionButtons = () => {
@@ -99,6 +105,8 @@ export const GroupPage = () => {
 
   const userFilter = users.length != 0 ? { user: users } : {};
   const totalFilter = { ...userFilter, ...datefilter };
+
+  console.log(datefilter);
 
   return (
     <Show

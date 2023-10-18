@@ -36,6 +36,7 @@ import {
   DateFilterContext,
 } from "../../util/plotting/computePlot";
 import { LinkToGroupWithPrefix } from "../../util/linking";
+import { alignTime } from "../../util/data/alignTime";
 
 const PostTitle = () => {
   const record = useRecordContext();
@@ -73,7 +74,7 @@ export const UserPage = () => {
 
   const datefilter =
     fromDate && toDate
-      ? { ts: [fromDate.toISOString(), toDate.toISOString()] }
+      ? { ts: [alignTime(fromDate).toISOString(), alignTime(toDate).toISOString()] }
       : {};
 
   const PostBulkActionButtons = () => {
