@@ -68,7 +68,6 @@ function PreparePlotData(
   // Now fill gaps where we've missed all timestamps
   let currentDate = fromDate.unix();
   while (currentDate < Math.max(...allts)) {
-    console.log(currentDate);
     const existsInRange = allts.some((timestamp) => {
       return (
         timestamp > currentDate &&
