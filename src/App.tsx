@@ -17,7 +17,7 @@ export const App = () => {
     },
   });
   return (
-    <Admin dataProvider={dataProvider} queryClient={queryClient} loginPage={MyLoginPage} authProvider={authProvider} requireAuth>
+    <Admin dataProvider={dataProvider} queryClient={queryClient} loginPage={MyLoginPage} authProvider={authProvider} requireAuth disableTelemetry>
       <Resource name="users" list={UserList} show={UserPage} />
       <Resource name="groups" list={GroupList} show={GroupPage} />
     </Admin>
