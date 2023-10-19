@@ -146,6 +146,16 @@ export const UserPage = () => {
               onChange={(newValue) => setToDate(newValue)}
               minDate={dayjs("2023-09-05")}
             />
+            <Button
+              label="Reset Dates"
+              variant="contained"
+              size="large"
+              sx={{ margin: 1.5 }}
+              onClick={() => {
+                setFromDate(dayjs().subtract(14, "day"));
+                setToDate(dayjs());
+              }}
+            />
           </LocalizationProvider>
         </SimpleShowLayout>
         <TabbedShowLayout>

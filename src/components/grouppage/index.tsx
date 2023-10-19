@@ -106,8 +106,6 @@ export const GroupPage = () => {
   const userFilter = users.length != 0 ? { user: users } : {};
   const totalFilter = { ...userFilter, ...datefilter };
 
-  console.log(datefilter);
-
   return (
     <Show
       title={<PostTitle />}
@@ -137,6 +135,16 @@ export const GroupPage = () => {
               value={toDate}
               onChange={(newValue) => setToDate(newValue)}
               minDate={dayjs("2023-09-05")}
+            />
+            <Button
+              label="Reset Dates"
+              variant="contained"
+              size="large"
+              sx={{ margin: 1.5 }}
+              onClick={() => {
+                setFromDate(dayjs().subtract(14, "day"));
+                setToDate(dayjs());
+              }}
             />
           </LocalizationProvider>
         </SimpleShowLayout>

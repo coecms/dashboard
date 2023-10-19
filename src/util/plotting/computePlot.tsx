@@ -37,7 +37,7 @@ function PreparePlotData(
 
   inData.forEach((x) => {
     let ts = dayjs(x.ts).unix();
-    allts.push(ts);
+    allts.indexOf(ts) === -1 && allts.push(ts);
     if (!(ts in data2)) {
       data2[ts] = {};
     }
@@ -67,7 +67,8 @@ function PreparePlotData(
 
   // Now fill gaps where we've missed all timestamps
   let currentDate = fromDate.unix();
-  while (currentDate < toDate.unix()) {
+  while (currentDate < Math.max(...allts)) {
+    console.log(currentDate);
     const existsInRange = allts.some((timestamp) => {
       return (
         timestamp > currentDate &&
