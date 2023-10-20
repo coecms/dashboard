@@ -10,10 +10,10 @@ const authProvider = {
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error(response.statusText);
                 }
-                return response.json();
+                return response.text();
             })
             .then(auth => {
-                localStorage.setItem('auth', JSON.stringify(auth));
+                localStorage.setItem('auth', auth);
             })
             .catch((e) => {
                 if ( e.message ) {
