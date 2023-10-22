@@ -18,6 +18,12 @@ const httpClient = async ( url: string, options: fetchUtils.Options = {}) => {
   console.log(options.headers)
   options.headers = customHeaders;
   const { status, headers, body, json } = await fetchUtils.fetchJson(url,options);
+
+  if ( status == 401 ) {
+    localStorage.removeItem('auth');
+    window.location.href = window.location.protocol + '//' + window.location.hostname + window.location.pathname + '#/login';
+  }
+
   return { status, headers, body, json }
 }
 
