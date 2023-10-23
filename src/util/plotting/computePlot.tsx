@@ -66,8 +66,16 @@ function PreparePlotData(
   proplist = proplist.slice(0, 30);
 
   // Now fill gaps where we've missed all timestamps
+
+  // If we're zeroing missing data, only go to the final real timestep
+  // If we're interpolating, go all the way to the end of the graph
+  let extent = Math.max(...allts);
+  if ( missingaction == "prev" ) {
+    extent = toDate.unix();
+  }
+
   let currentDate = fromDate.unix();
-  while (currentDate < Math.max(...allts)) {
+  while (currentDate < extent) {
     const existsInRange = allts.some((timestamp) => {
       return (
         timestamp > currentDate &&
