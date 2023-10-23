@@ -70,7 +70,7 @@ function PreparePlotData(
   // If we're zeroing missing data, only go to the final real timestep
   // If we're interpolating, go all the way to the end of the graph
   let extent = Math.max(...allts);
-  if ( missingaction == "prev" ) {
+  if (missingaction == "prev") {
     extent = toDate.unix();
   }
 
@@ -144,7 +144,7 @@ function MakeComputeGraphUser() {
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
         />
-        <YAxis type="number" tickFormatter={formatSUint} />
+        <YAxis type="number" tickFormatter={formatSUint} width={80} />
         <Tooltip />
         <Legend />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
@@ -187,7 +187,7 @@ function MakeComputeGraphProj() {
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
         />
-        <YAxis type="number" tickFormatter={formatSUint} />
+        <YAxis type="number" tickFormatter={formatSUint} width={80} />
         <Tooltip />
         <Legend />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
@@ -251,6 +251,7 @@ function MakeStorageGraphUser() {
               return x.toLocaleString();
             }
           }}
+          width={80}
         />
         <Tooltip />
         <Legend />
@@ -303,6 +304,7 @@ function MakeStorageGraphProj() {
               return x.toLocaleString();
             }
           }}
+          width={80}
         />
         <Tooltip />
         <Legend />
