@@ -15,7 +15,6 @@ const httpClient = async ( url: string, options: fetchUtils.Options = {}) => {
   if ( authkey ) {
     customHeaders.set("Authorization",authkey);
   }
-  console.log(options.headers)
   options.headers = customHeaders;
   const { status, headers, body, json } = await fetchUtils.fetchJson(url,options);
 
