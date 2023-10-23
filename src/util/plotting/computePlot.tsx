@@ -27,7 +27,7 @@ const RenderTooltip = ({ active, payload, label, formatter }) => {
     return (
       <div className="custom-tooltip">
         <p className="label">
-          {dayjs.unix(label).format("YYYY-MM-DD HH:mm A")}
+          {dayjs.unix(label).format("YYYY-MM-DD h:mm A")}
         </p>
         <ul>
           {payload.map((entry, index: Number) => (
