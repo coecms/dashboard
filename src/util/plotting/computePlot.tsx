@@ -12,13 +12,35 @@ import {
 } from "recharts";
 
 import { formatSUint } from "../formatting/formatSUint";
+import { formatSU } from "../formatting/formatSU";
 import { colourPicker } from "../formatting/colourPicker";
 import { formatStorage } from "../formatting/formatStorage";
+import { specialUsers } from "../data/groups";
 
 import dayjs from "dayjs";
 import "dayjs/locale/en-au";
 
 const DateFilterContext = React.createContext(null);
+
+const RenderTooltip = ({ active, payload, label, formatter }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">
+          {dayjs.unix(label).format("YYYY-MM-DD HH:mm A")}
+        </p>
+        <ul>
+          {payload.map((entry, index: Number) => (
+            <li key={`item-${index}`} style={{ color: entry.color }}>{`${
+              entry.name in specialUsers ? specialUsers[entry.name] : entry.name
+            }: ${formatter(entry.value)}`}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+  return null;
+};
 
 function PreparePlotData(
   searchProp,
@@ -145,7 +167,15 @@ function MakeComputeGraphUser() {
           domain={[fromDate.unix(), toDate.unix()]}
         />
         <YAxis type="number" tickFormatter={formatSUint} width={80} />
-        <Tooltip />
+        <Tooltip
+          content={<RenderTooltip formatter={formatSU} />}
+          wrapperStyle={{
+            backgroundColor: "white",
+            paddingLeft: "5px",
+            paddingRight: "5px",
+            opacity: "0.8",
+          }}
+        />
         <Legend />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
         {projectlist.map((project, index) => {
@@ -188,7 +218,15 @@ function MakeComputeGraphProj() {
           domain={[fromDate.unix(), toDate.unix()]}
         />
         <YAxis type="number" tickFormatter={formatSUint} width={80} />
-        <Tooltip />
+        <Tooltip
+          content={<RenderTooltip formatter={formatSU} />}
+          wrapperStyle={{
+            backgroundColor: "white",
+            paddingLeft: "5px",
+            paddingRight: "5px",
+            opacity: "0.8",
+          }}
+        />
         <Legend />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
         {userlist.map((user, index) => {
@@ -253,7 +291,23 @@ function MakeStorageGraphUser() {
           }}
           width={80}
         />
-        <Tooltip />
+        <Tooltip
+          content={
+            <RenderTooltip
+              formatter={
+                storageType == "size"
+                  ? formatStorage
+                  : (x) => x.toLocaleString()
+              }
+            />
+          }
+          wrapperStyle={{
+            backgroundColor: "white",
+            paddingLeft: "5px",
+            paddingRight: "5px",
+            opacity: "0.8",
+          }}
+        />
         <Legend />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
         {projectlist.map((project, index) => {
@@ -306,7 +360,23 @@ function MakeStorageGraphProj() {
           }}
           width={80}
         />
-        <Tooltip />
+        <Tooltip
+          content={
+            <RenderTooltip
+              formatter={
+                storageType == "size"
+                  ? formatStorage
+                  : (x) => x.toLocaleString()
+              }
+            />
+          }
+          wrapperStyle={{
+            backgroundColor: "white",
+            paddingLeft: "5px",
+            paddingRight: "5px",
+            opacity: "0.8",
+          }}
+        />
         <Legend />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
         {userlist.map((user, index) => {
