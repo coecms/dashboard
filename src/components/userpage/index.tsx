@@ -19,17 +19,10 @@ import React, { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
-import dayjs from "dayjs";
-import "dayjs/locale/en-au";
-
-import { formatSU } from "../../util/formatting/formatSU";
-
 import Chip from "@mui/material/Chip";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import { formatStorage } from "../../util/formatting/formatStorage";
 import {
   MakeComputeGraphUser,
   MakeStorageGraphUser,
@@ -37,6 +30,11 @@ import {
 } from "../../util/plotting/computePlot";
 import { LinkToGroupWithPrefix } from "../../util/linking";
 import { alignTime } from "../../util/data/alignTime";
+import { formatSU } from "../../util/formatting/formatSU";
+import { formatStorage } from "../../util/formatting/formatStorage";
+
+import dayjs from "dayjs";
+import "dayjs/locale/en-au";
 
 const PostTitle = () => {
   const record = useRecordContext();
@@ -72,9 +70,15 @@ export const UserPage = () => {
   const [toDate, setToDate] = useState(dayjs());
   const [alignment, setAlignment] = useState("size");
 
+  // Grab slightly too much data in order to prevent a new data point being created at the starttime of the graph
   const datefilter =
     fromDate && toDate
-      ? { ts: [alignTime(fromDate).toISOString(), alignTime(toDate).toISOString()] }
+      ? {
+          ts: [
+            alignTime(fromDate.subtract(6, "hours")).toISOString(),
+            alignTime(toDate).toISOString(),
+          ],
+        }
       : {};
 
   const PostBulkActionButtons = () => {

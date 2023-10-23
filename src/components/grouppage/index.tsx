@@ -22,9 +22,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import dayjs from "dayjs";
-import "dayjs/locale/en-au";
-
 import { formatSU } from "../../util/formatting/formatSU";
 import { formatStorage } from "../../util/formatting/formatStorage";
 import { groupQuotaProjects } from "../../util/data/groups";
@@ -39,6 +36,9 @@ import {
   LinkToGroupWithPrefix,
 } from "../../util/linking";
 import { alignTime } from "../../util/data/alignTime";
+
+import dayjs from "dayjs";
+import "dayjs/locale/en-au";
 
 const PostTitle = () => {
   const record = useRecordContext();
@@ -65,7 +65,7 @@ export const GroupPage = () => {
     fromDate && toDate
       ? {
           ts: [
-            alignTime(fromDate).toISOString(),
+            alignTime(fromDate.subtract(6, "hours")).toISOString(),
             alignTime(toDate).toISOString(),
           ],
         }
