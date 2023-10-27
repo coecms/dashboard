@@ -76,10 +76,8 @@ function PreparePlotData(
     if (!proplist.includes(x[searchProp])) {
       proplist.push(x[searchProp]);
     }
-    if (missingaction === "prev") {
-      if (!(x[searchProp] in firstRealTimestampForProp)) {
-        firstRealTimestampForProp[x[searchProp]] = ts;
-      }
+    if (!(x[searchProp] in firstRealTimestampForProp)) {
+      firstRealTimestampForProp[x[searchProp]] = ts;
     }
   });
 
@@ -117,15 +115,15 @@ function PreparePlotData(
   allts.forEach((key, index) => {
     proplist.forEach((proj) => {
       if (!(proj in data2[key])) {
-        if (missingaction == "zero") {
-          data2[key][proj] = 0.0;
-        } else if (missingaction == "prev") {
-          if (index > 0) {
+        if ( index > 0 ) {
+          if (missingaction == "zero") {
+            data2[key][proj] = 0.0;
+          } else if (missingaction == "prev") {
             data2[key][proj] = data2[allts[index - 1]][proj];
-          } else {
+          }
+        } else {
             // For the 0-th index, grab the first real bit of data we have
             data2[key][proj] = data2[firstRealTimestampForProp[proj]][proj];
-          }
         }
       }
     });
