@@ -119,7 +119,7 @@ function PreparePlotData(
   allts.sort();
 
   // Now fill in the missing data
-  allts.forEach((key) => {
+  allts.forEach((key, index) => {
     proplist.forEach((proj) => {
       if (!(proj in data2[key])) {
         if ( key > ts ) {
