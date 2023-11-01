@@ -17,7 +17,7 @@ import { colourPicker } from "../formatting/colourPicker";
 import { formatStorage } from "../formatting/formatStorage";
 import { specialUsers } from "../data/groups";
 
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/en-au";
 
 const DateFilterContext = React.createContext(null);
@@ -43,19 +43,19 @@ const RenderTooltip = ({ active, payload, label, formatter }) => {
 };
 
 function PreparePlotData(
-  searchProp,
-  dataProp,
+  searchProp: string,
+  dataProp: string,
   inData,
-  missingaction = "zero",
-  missingtslookahead = 6,
-  fromDate,
-  toDate
+  missingaction: string = "zero",
+  missingtslookahead: number = 6,
+  fromDate: Dayjs,
+  toDate: Dayjs
 ) {
   var data2: { [key: number]: object } = {};
   var usageSum: { [key: number]: number } = {};
   var proplist: string[] = [];
   var allts: number[] = [];
-  var firstRealTimestampForProp = {};
+  var firstRealTimestampForProp: { [key: string]: number} = {};
 
   inData.forEach((x) => {
     let ts = dayjs(x.ts).unix();
@@ -109,21 +109,34 @@ function PreparePlotData(
     currentDate = currentDate + missingtslookahead * 3600;
   }
 
+  // And the start-of-graph timestep
+  const ts = fromDate.unix();
+  if ( allts.indexOf(ts) === -1 ) {
+    allts.push(ts);
+    data2[ts] = {};
+  }
+
   allts.sort();
 
   // Now fill in the missing data
-  allts.forEach((key, index) => {
+  allts.forEach((key) => {
     proplist.forEach((proj) => {
       if (!(proj in data2[key])) {
-        if ( index > 0 ) {
+        if ( key > ts ) {
           if (missingaction == "zero") {
             data2[key][proj] = 0.0;
           } else if (missingaction == "prev") {
             data2[key][proj] = data2[allts[index - 1]][proj];
           }
         } else {
-            // For the 0-th index, grab the first real bit of data we have
-            data2[key][proj] = data2[firstRealTimestampForProp[proj]][proj];
+            // For any time before and including the start of the
+            // graph, grab the first real bit of data we have
+            // But only if its close enough to the start of the window
+            if ( firstRealTimestampForProp[proj] < ts + 4 * missingtslookahead * 3600 ) {
+              data2[key][proj] = data2[firstRealTimestampForProp[proj]][proj];
+            } else {
+              data2[key][proj] = 0.0;
+            }
         }
       }
     });
@@ -163,6 +176,7 @@ function MakeComputeGraphUser() {
           type="number"
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
+          allowDataOverflow
         />
         <YAxis type="number" tickFormatter={formatSUint} width={80} />
         <Tooltip
@@ -214,6 +228,7 @@ function MakeComputeGraphProj() {
           type="number"
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
+          allowDataOverflow
         />
         <YAxis type="number" tickFormatter={formatSUint} width={80} />
         <Tooltip
@@ -277,6 +292,7 @@ function MakeStorageGraphUser() {
           type="number"
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
+          allowDataOverflow
         />
         <YAxis
           type="number"
@@ -346,6 +362,7 @@ function MakeStorageGraphProj() {
           type="number"
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
+          allowDataOverflow
         />
         <YAxis
           type="number"
