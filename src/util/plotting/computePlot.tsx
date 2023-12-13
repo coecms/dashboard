@@ -197,6 +197,7 @@ function MakeComputeGraphUser() {
               type="monotone"
               stroke={colourPicker(index)}
               fill={colourPicker(index)}
+              fillOpacity="1"
               stackId="1"
             />
           );
@@ -331,6 +332,7 @@ function MakeStorageGraphUser() {
               type="monotone"
               stroke={colourPicker(index)}
               fill={colourPicker(index)}
+              fillOpacity="1"
               stackId="1"
             />
           );
