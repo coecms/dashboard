@@ -13,6 +13,6 @@ const colours = [
   "#a3de83",
 ];
 
-export function colourPicker(index) {
+export function colourPicker(index: number) {
   return colours[index % colours.length];
 }

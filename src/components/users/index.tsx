@@ -16,6 +16,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { formatSU } from "../../util/formatting/formatSU";
 import { formatStorage } from "../../util/formatting/formatStorage";
 
+import { clex_secondary_colours_dark } from "../../util/theme/colours";
+
 const userFilters = [
   <TextInput
     source="id"
@@ -234,8 +236,22 @@ function scratchUsage() {
 
 export const UserList = () => {
   return (
-    <List filters={userFilters}>
-      <Datagrid rowClick="show" bulkActionButtons={false}>
+    <List filters={userFilters} sx={{ padding: 2 }}>
+      <Datagrid
+        rowClick="show"
+        bulkActionButtons={false}
+        sx={{
+          "& .MuiTableRow-hover": {
+            ":hover": {
+              backgroundColor: clex_secondary_colours_dark["purple"],
+              color: "white",
+            },
+          },
+          "& .MuiTableCell-root": {
+            color: "inherit",
+          },
+        }}
+      >
         <TextField source="id" label="Username" />
         <TextField source="pw_name" label="Name" />
         <FunctionField

@@ -16,6 +16,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { formatSU } from "../../util/formatting/formatSU";
 import { formatStorage } from "../../util/formatting/formatStorage";
 
+import { clex_secondary_colours_dark } from "../../util/theme/colours";
+
 import React from "react";
 
 const groupFilters = [
@@ -300,7 +302,22 @@ function MassdataUsage() {
 export const GroupList = () => {
   return (
     <List filters={groupFilters}>
-      <Datagrid rowClick="show" bulkActionButtons={false}>
+      <Datagrid
+        rowClick="show"
+        bulkActionButtons={false}
+        sx={{
+          "& .MuiTableRow-hover": {
+            ":hover": {
+              backgroundColor: clex_secondary_colours_dark["purple"],
+              color: "white",
+            },
+          },
+          "& .MuiTableCell-root": {
+            color:"inherit",
+          }
+
+        }}
+      >
         <TextField source="id" label="Group Name" />
         <FunctionField label="Compute Usage" render={ComputeUsage} />
         <FunctionField label="Scratch Usage" render={ScratchUsage} />
