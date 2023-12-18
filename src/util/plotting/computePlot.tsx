@@ -26,9 +26,7 @@ const RenderTooltip = ({ active, payload, label, formatter }) => {
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">
-        <p className="label">
-          {dayjs.unix(label).format("YYYY-MM-DD h:mm A")}
-        </p>
+        <p className="label">{dayjs.unix(label).format("YYYY-MM-DD h:mm A")}</p>
         <ul>
           {payload.map((entry, index: Number) => (
             <li key={`item-${index}`} style={{ color: entry.color }}>{`${
@@ -55,7 +53,7 @@ function PreparePlotData(
   var usageSum: { [key: number]: number } = {};
   var proplist: string[] = [];
   var allts: number[] = [];
-  var firstRealTimestampForProp: { [key: string]: number} = {};
+  var firstRealTimestampForProp: { [key: string]: number } = {};
 
   inData.forEach((x) => {
     let ts = dayjs(x.ts).unix();
@@ -111,7 +109,7 @@ function PreparePlotData(
 
   // And the start-of-graph timestep
   const ts = fromDate.unix();
-  if ( allts.indexOf(ts) === -1 ) {
+  if (allts.indexOf(ts) === -1) {
     allts.push(ts);
     data2[ts] = {};
   }
@@ -122,21 +120,24 @@ function PreparePlotData(
   allts.forEach((key, index) => {
     proplist.forEach((proj) => {
       if (!(proj in data2[key])) {
-        if ( key > ts ) {
+        if (key > ts) {
           if (missingaction == "zero") {
             data2[key][proj] = 0.0;
           } else if (missingaction == "prev") {
             data2[key][proj] = data2[allts[index - 1]][proj];
           }
         } else {
-            // For any time before and including the start of the
-            // graph, grab the first real bit of data we have
-            // But only if its close enough to the start of the window
-            if ( firstRealTimestampForProp[proj] < ts + 4 * missingtslookahead * 3600 ) {
-              data2[key][proj] = data2[firstRealTimestampForProp[proj]][proj];
-            } else {
-              data2[key][proj] = 0.0;
-            }
+          // For any time before and including the start of the
+          // graph, grab the first real bit of data we have
+          // But only if its close enough to the start of the window
+          if (
+            firstRealTimestampForProp[proj] <
+            ts + 4 * missingtslookahead * 3600
+          ) {
+            data2[key][proj] = data2[firstRealTimestampForProp[proj]][proj];
+          } else {
+            data2[key][proj] = 0.0;
+          }
         }
       }
     });
@@ -176,9 +177,17 @@ function MakeComputeGraphUser() {
           type="number"
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
+          tickMargin={8}
+          style={{ fontWeight: 500 }}
           allowDataOverflow
         />
-        <YAxis type="number" tickFormatter={formatSUint} width={80} />
+        <YAxis
+          type="number"
+          tickFormatter={formatSUint}
+          width={80}
+          tickMargin={5}
+          style={{ fontWeight: 500 }}
+        />
         <Tooltip
           content={<RenderTooltip formatter={formatSU} />}
           wrapperStyle={{
@@ -229,9 +238,16 @@ function MakeComputeGraphProj() {
           type="number"
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
+          tickMargin={8}
+          style={{ fontWeight: 500 }}
           allowDataOverflow
         />
-        <YAxis type="number" tickFormatter={formatSUint} width={80} />
+        <YAxis
+          type="number"
+          tickFormatter={formatSUint}
+          width={80}
+          style={{ fontWeight: 500 }}
+        />
         <Tooltip
           content={<RenderTooltip formatter={formatSU} />}
           wrapperStyle={{
@@ -293,6 +309,8 @@ function MakeStorageGraphUser() {
           type="number"
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
+          tickMargin={8}
+          style={{ fontWeight: 500 }}
           allowDataOverflow
         />
         <YAxis
@@ -305,6 +323,7 @@ function MakeStorageGraphUser() {
             }
           }}
           width={80}
+          style={{ fontWeight: 500 }}
         />
         <Tooltip
           content={
@@ -364,6 +383,8 @@ function MakeStorageGraphProj() {
           type="number"
           tickFormatter={(x) => dayjs.unix(x).format("YYYY-MM-DD")}
           domain={[fromDate.unix(), toDate.unix()]}
+          tickMargin={8}
+          style={{ fontWeight: 500 }}
           allowDataOverflow
         />
         <YAxis
@@ -376,6 +397,7 @@ function MakeStorageGraphProj() {
             }
           }}
           width={80}
+          style={{ fontWeight: 500 }}
         />
         <Tooltip
           content={
@@ -383,7 +405,7 @@ function MakeStorageGraphProj() {
               formatter={
                 storageType == "size"
                   ? formatStorage
-                  : (x) => x.toLocaleString()
+                  : (x: number) => x.toLocaleString()
               }
             />
           }
