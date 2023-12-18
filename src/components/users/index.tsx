@@ -240,17 +240,7 @@ export const UserList = () => {
       <Datagrid
         rowClick="show"
         bulkActionButtons={false}
-        sx={{
-          "& .MuiTableRow-hover": {
-            "&:hover": {
-              backgroundColor: clex_secondary_colours_dark["purple"],
-              color: "white",
-            },
-          },
-          "& .MuiTableCell-root": {
-            color: "inherit",
-          },
-        }}
+        hover={false}
       >
         <TextField source="id" label="Username" />
         <TextField source="pw_name" label="Name" />

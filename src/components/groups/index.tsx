@@ -305,18 +305,7 @@ export const GroupList = () => {
       <Datagrid
         rowClick="show"
         bulkActionButtons={false}
-        sx={{
-          "& .MuiTableRow-hover": {
-            "&:hover": {
-              backgroundColor: clex_secondary_colours_dark["purple"],
-              color: "white",
-            },
-          },
-          "& .MuiTableCell-root": {
-            color:"inherit",
-          }
-
-        }}
+        hover={false}
       >
         <TextField source="id" label="Group Name" />
         <FunctionField label="Compute Usage" render={ComputeUsage} />

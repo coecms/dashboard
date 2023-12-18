@@ -33,6 +33,25 @@ const dashboardTheme = {
                 },
             },
         },
+        MuiTableCell: {
+            styleOverrides: {
+                root: {
+                    color:"inherit",
+                }
+            }
+        },
+        RaDatagrid: {
+            styleOverrides: {
+                root: {
+                    "& .RaDatagrid-clickableRow": {
+                        ":hover": {
+                            backgroundColor: clex_secondary_colours_dark["purple"],
+                            color: "white",
+                          },
+                    }
+                }
+            }
+        },
     },
 };
 
