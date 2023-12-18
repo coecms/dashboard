@@ -242,7 +242,7 @@ export const UserList = () => {
         bulkActionButtons={false}
         sx={{
           "& .MuiTableRow-hover": {
-            ":hover": {
+            "&:hover": {
               backgroundColor: clex_secondary_colours_dark["purple"],
               color: "white",
             },
