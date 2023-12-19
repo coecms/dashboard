@@ -167,7 +167,10 @@ export const GroupPage = () => {
               sort={{ field: "usage", order: "DESC" }}
               perPage={9999}
             >
-              <Datagrid bulkActionButtons={<PostBulkActionButtons />}>
+              <Datagrid
+                bulkActionButtons={<PostBulkActionButtons />}
+                hover={false}
+              >
                 <FunctionField
                   label="User"
                   render={(record) => LinkToUserWithPrefix(record.user)}
@@ -213,7 +216,10 @@ export const GroupPage = () => {
               filter={{ fs: "scratch" }}
               perPage={9999}
             >
-              <Datagrid bulkActionButtons={<PostBulkActionButtons />}>
+              <Datagrid
+                bulkActionButtons={<PostBulkActionButtons />}
+                hover={false}
+              >
                 <FunctionField
                   label="User"
                   render={(record) => LinkToUserWithPrefix(record.user)}
@@ -283,7 +289,10 @@ export const GroupPage = () => {
               filter={{ fs: "gdata" }}
               perPage={9999}
             >
-              <Datagrid bulkActionButtons={<PostBulkActionButtons />}>
+              <Datagrid
+                bulkActionButtons={<PostBulkActionButtons />}
+                hover={false}
+              >
                 <FunctionField
                   label="User"
                   render={(record) => LinkToUserWithPrefix(record.user)}
@@ -348,7 +357,7 @@ export const GroupPage = () => {
               filter={{ fs: "massdata" }}
               perPage={9999}
             >
-              <Datagrid bulkActionButtons={false}>
+              <Datagrid bulkActionButtons={false} hover={false}>
                 <TextField label="" sortBy="user" source="user" />
                 <TextField
                   label="Project"

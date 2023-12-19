@@ -180,7 +180,10 @@ export const UserPage = () => {
               reference="compute_latest"
               sort={{ field: "usage", order: "DESC" }}
             >
-              <Datagrid bulkActionButtons={<PostBulkActionButtons />}>
+              <Datagrid
+                bulkActionButtons={<PostBulkActionButtons />}
+                hover={false}
+              >
                 <FunctionField
                   label="Project"
                   render={(record) => LinkToGroupWithPrefix(record.project)}
@@ -224,7 +227,10 @@ export const UserPage = () => {
               sort={{ field: "size", order: "DESC" }}
               filter={{ fs: "scratch" }}
             >
-              <Datagrid bulkActionButtons={<PostBulkActionButtons />}>
+              <Datagrid
+                bulkActionButtons={<PostBulkActionButtons />}
+                hover={false}
+              >
                 <FunctionField
                   label="Directory"
                   render={(record) =>
@@ -286,7 +292,10 @@ export const UserPage = () => {
               sort={{ field: "size", order: "DESC" }}
               filter={{ fs: "gdata" }}
             >
-              <Datagrid bulkActionButtons={<PostBulkActionButtons />}>
+              <Datagrid
+                bulkActionButtons={<PostBulkActionButtons />}
+                hover={false}
+              >
                 <FunctionField
                   label="Directory"
                   render={(record) =>
