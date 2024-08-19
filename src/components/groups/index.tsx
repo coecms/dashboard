@@ -16,6 +16,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { formatSU } from "../../util/formatting/formatSU";
 import { formatStorage } from "../../util/formatting/formatStorage";
 
+import { DeprecationNote } from "../../util/data/deprecationnote";
+
 import { clex_secondary_colours_dark } from "../../util/theme/colours";
 
 import React from "react";
@@ -301,6 +303,8 @@ function MassdataUsage() {
 
 export const GroupList = () => {
   return (
+    <div>
+    <DeprecationNote />
     <List filters={groupFilters}>
       <Datagrid
         rowClick="show"
@@ -314,5 +318,6 @@ export const GroupList = () => {
         <FunctionField label="Massdata Usage" render={MassdataUsage} />
       </Datagrid>
     </List>
+    </div>
   );
 };

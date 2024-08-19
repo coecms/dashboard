@@ -15,6 +15,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 import { formatSU } from "../../util/formatting/formatSU";
 import { formatStorage } from "../../util/formatting/formatStorage";
+import { DeprecationNote } from "../../util/data/deprecationnote";
 
 import { clex_secondary_colours_dark } from "../../util/theme/colours";
 
@@ -236,6 +237,8 @@ function scratchUsage() {
 
 export const UserList = () => {
   return (
+    <div>
+    < DeprecationNote />
     <List filters={userFilters} sx={{ padding: 2 }}>
       <Datagrid
         rowClick="show"
@@ -258,5 +261,6 @@ export const UserList = () => {
         />
       </Datagrid>
     </List>
+    </div>
   );
 };
